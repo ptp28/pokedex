@@ -28,6 +28,11 @@ const dPadRight = document.querySelector(".right");
 let previousURL = null;
 let nextURL = null;
 
+const LEFT_BUTTON_PRESS = new Audio();
+LEFT_BUTTON_PRESS.src = "sounds/LeftButtonClick.mp3";
+const RIGHT_BUTTON_PRESS = new Audio();
+RIGHT_BUTTON_PRESS.src = "sounds/RightButtonClick.mp3";
+
 // Functions
 const fetchPokeList = (url) => {
     // Fetching data for right side
@@ -102,6 +107,7 @@ const fetchPokeData = (id) => {
 };
 
 function handlePreviousButtonClick() {
+    RIGHT_BUTTON_PRESS.play();
     if (previousURL) {
         fetchPokeList(previousURL);
     }
@@ -117,6 +123,7 @@ function handleNextButtonClick() {
     //     nextURL = nextURL.substring(0,nextURL.lastIndexOf('=')+1) + "7";
     //     offset = 0;
     // }
+    RIGHT_BUTTON_PRESS.play();
 
     if (nextURL) {
         fetchPokeList(nextURL);
@@ -135,6 +142,7 @@ function handleListItemClick(e) {
 
 function handleButtonAClick()
 {
+    LEFT_BUTTON_PRESS.play();
     mainScreen.classList.add('hide');
     secondaryScreen.classList.remove('hide');
 
@@ -152,6 +160,7 @@ function handleButtonAClick()
 
 function handleButtonBClick()
 {
+    LEFT_BUTTON_PRESS.play();
     secondaryScreen.classList.add('hide');
     mainScreen.classList.remove('hide');
 }
@@ -164,6 +173,7 @@ function handlePokeIdInput()
 
 function incrementPokeInputID()
 {
+    LEFT_BUTTON_PRESS.play();
     pokeIdInput.value = (parseInt(pokeIdInput.value) + 1).toString().padStart(3, "0");
     handlePokeIdInput();
 
@@ -171,6 +181,7 @@ function incrementPokeInputID()
 
 function decrementPokeInputID()
 {
+    LEFT_BUTTON_PRESS.play();
     pokeIdInput.value = (parseInt(pokeIdInput.value) - 1).toString().padStart(3, "0");
     handlePokeIdInput();
 }
