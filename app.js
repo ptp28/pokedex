@@ -9,8 +9,20 @@ const pokeTypeTwo = document.querySelector(".poke-type-two");
 const pokeWeight = document.querySelector(".poke-weight");
 const pokeHeight = document.querySelector(".poke-height");
 const pokeListItems = document.querySelectorAll(".list-item");
-const leftButton = document.querySelector(".left-button");
-const rightButton = document.querySelector(".right-button");
+const previousButton = document.querySelector(".previous-button");
+const nextButton = document.querySelector(".next-button");
+
+const buttonA = document.querySelector(".button-a");
+const buttonB = document.querySelector(".button-b");
+const secondaryScreen = document.querySelector(".secondary-screen");
+const pokeFrontImageBig = document.querySelector(".poke-front-image-big");
+const pokeBackImageBig = document.querySelector(".poke-back-image-big");
+const pokeIdInput = document.querySelector(".poke-id-input");
+
+const dPadTop = document.querySelector(".top");
+const dPadBottom = document.querySelector(".bottom");
+const dPadLeft = document.querySelector(".left");
+const dPadRight = document.querySelector(".right");
 
 //Constants and variables
 let previousURL = null;
@@ -65,9 +77,13 @@ const fetchPokeData = (id) => {
                 pokeTypeTwo.textContent = "";
             }
 
-            mainScreen.classList = "main-screen hide"; // Remove any previous classes and add default classes
+            mainScreen.classList = "main-screen hide"; 
+            secondaryScreen.classList = "secondary-screen hide";
+            pokeFrontImageBig.classList = "poke-front-image-big hide";
+            pokeBackImageBig.classList = "poke-back-image-big hide";// Remove any previous classes and add default classes
 
-            mainScreen.classList.add(pokeTypeOne.textContent); // Background color depending on first type
+            mainScreen.classList.add(pokeTypeOne.textContent);
+            secondaryScreen.classList.add(pokeTypeOne.textContent); // Background color depending on first type
 
             mainScreen.classList.remove("hide");
             pokeName.textContent = data["name"];
@@ -77,16 +93,31 @@ const fetchPokeData = (id) => {
 
             pokeFrontImage.src = data["sprites"]["front_default"] || "";
             pokeBackImage.src = data["sprites"]["back_default"] || ""; // ORing it with '' in case image is not present
+
+            pokeFrontImageBig.src = data["sprites"]["front_default"] || "";
+            pokeBackImageBig.src = data["sprites"]["back_default"] || ""; // ORing it with '' in case image is not present
+
+            pokeIdInput.value = data["id"].toString().padStart(3, "0");
         });
 };
 
-function handleLeftButtonClick() {
+function handlePreviousButtonClick() {
     if (previousURL) {
         fetchPokeList(previousURL);
     }
 }
 
-function handleRightButtonClick() {
+function handleNextButtonClick() {
+    // console.log(nextURL);
+
+    // const offset = nextURL.substring(nextURL.indexOf("offset=")+7,nextURL.indexOf('&'));    // Getting offset from url
+
+    // if(offset == 800)
+    // {
+    //     nextURL = nextURL.substring(0,nextURL.lastIndexOf('=')+1) + "7";
+    //     offset = 0;
+    // }
+
     if (nextURL) {
         fetchPokeList(nextURL);
     }
@@ -102,13 +133,65 @@ function handleListItemClick(e) {
     fetchPokeData(id);
 }
 
+function handleButtonAClick()
+{
+    mainScreen.classList.add('hide');
+    secondaryScreen.classList.remove('hide');
+
+    if(pokeFrontImageBig.classList.contains('hide'))
+    {
+        pokeFrontImageBig.classList.remove('hide');
+        pokeBackImageBig.classList.add('hide');
+    }
+    else
+    {
+        pokeFrontImageBig.classList.add('hide');
+        pokeBackImageBig.classList.remove('hide');
+    }
+}
+
+function handleButtonBClick()
+{
+    secondaryScreen.classList.add('hide');
+    mainScreen.classList.remove('hide');
+}
+
+function handlePokeIdInput()
+{
+    const id = parseInt(pokeIdInput.value);
+    fetchPokeData(id);
+}
+
+function incrementPokeInputID()
+{
+    pokeIdInput.value = (parseInt(pokeIdInput.value) + 1).toString().padStart(3, "0");
+    handlePokeIdInput();
+
+}
+
+function decrementPokeInputID()
+{
+    pokeIdInput.value = (parseInt(pokeIdInput.value) - 1).toString().padStart(3, "0");
+    handlePokeIdInput();
+}
+
+
 // Event listeners
-leftButton.addEventListener("click", handleLeftButtonClick);
-rightButton.addEventListener("click", handleRightButtonClick);
+previousButton.addEventListener("click", handlePreviousButtonClick);
+nextButton.addEventListener("click", handleNextButtonClick);
 
 for (const pokeListItem of pokeListItems) { // Add event listeners for all items in list
     pokeListItem.addEventListener("click", handleListItemClick);
 }
+
+buttonA.addEventListener("click",handleButtonAClick);
+buttonB.addEventListener("click",handleButtonBClick);
+
+pokeIdInput.addEventListener("change",handlePokeIdInput);
+dPadTop.addEventListener("click",incrementPokeInputID);
+dPadRight.addEventListener("click",incrementPokeInputID);
+dPadLeft.addEventListener("click",decrementPokeInputID);
+dPadBottom.addEventListener("click",decrementPokeInputID);
 
 //init
 fetchPokeList("https://pokeapi.co/api/v2/pokemon?offset=0&limit=20");

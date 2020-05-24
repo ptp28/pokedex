@@ -47,9 +47,20 @@
                   </div>
                 </div>
               </div>
+              <div class="secondary-screen hide" style="color: red;">
+                <div class="screen__image-big">
+                  <img src="" class="poke-front-image-big hide" alt="front">
+                  <br>
+                  <img src="" class="poke-back-image-big hide" alt="back">
+                </div>
+              </div>
             </div>
           </div>
           <div class="left-container__controllers">
+            <div>
+              <label for="pokeID">#</label>
+              <input type="number" id="pokeID" class="poke-id-input" min="0" max="964">
+            </div>
             <div class="controllers__d-pad">
               <div class="d-pad__cell top"></div>
               <div class="d-pad__cell left"></div>
@@ -58,8 +69,8 @@
               <div class="d-pad__cell bottom"></div>
             </div>
             <div class="controllers__buttons">
-              <div class="buttons__button">B</div>
-              <div class="buttons__button">A</div>
+              <div class="buttons__button button-b">B</div>
+              <div class="buttons__button button-a">A</div>
             </div>
           </div>
         </div>
@@ -95,8 +106,8 @@
         </div>
       </div>
       <div class="right-container__buttons">
-        <div class="left-button">Prev</div>
-        <div class="right-button">Next</div>
+        <div class="previous-button">Previous</div>
+        <div class="next-button">Next</div>
       </div>
     </div>
   </div>
