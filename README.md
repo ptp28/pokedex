@@ -9,6 +9,6 @@ This is just a practice project to learn how to use the Javascript fetch() funct
 ## References
 * [PokéAPI v2](https://pokeapi.co)
 * [PokéAPI documentation](https://pokeapi.co/docs/v2.html/)
-* [Veekun Files for Pokemon Cries](https://veekun.com/dex/downloads#other-files)
+* [Veekun Files for audio files of Pokemon cries](https://veekun.com/dex/downloads#other-files)
 * [brion/ogv.js for playing audio in Safari](https://github.com/brion/ogv.js/)
 * [Justin Kim's tutorial on Youtube](https://www.youtube.com/watch?v=wXjSaZb67n8)
