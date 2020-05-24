@@ -24,6 +24,8 @@ const dPadBottom = document.querySelector(".bottom");
 const dPadLeft = document.querySelector(".left");
 const dPadRight = document.querySelector(".right");
 
+const playButton = document.querySelector(".play-button");
+
 //Constants and variables
 let previousURL = null;
 let nextURL = null;
@@ -32,6 +34,23 @@ const LEFT_BUTTON_PRESS = new Audio();
 LEFT_BUTTON_PRESS.src = "sounds/LeftButtonClick.mp3";
 const RIGHT_BUTTON_PRESS = new Audio();
 RIGHT_BUTTON_PRESS.src = "sounds/RightButtonClick.mp3";
+
+var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
+navigator.userAgent &&
+navigator.userAgent.indexOf('CriOS') == -1 &&
+navigator.userAgent.indexOf('FxiOS') == -1; // Check if UserAgent is Safari
+
+let POKEMON_CRY;
+if(isSafari)
+{
+    console.log("using OGVPlayer");
+    POKEMON_CRY = new OGVPlayer();
+}
+else
+{
+    console.log("using Audio");
+    POKEMON_CRY = new Audio();
+}
 
 // Functions
 const fetchPokeList = (url) => {
@@ -103,6 +122,8 @@ const fetchPokeData = (id) => {
             pokeBackImageBig.src = data["sprites"]["back_default"] || ""; // ORing it with '' in case image is not present
 
             pokeIdInput.value = data["id"].toString().padStart(3, "0");
+
+            POKEMON_CRY.src = "sounds/cries/"+data['id']+".ogg";
         });
 };
 
@@ -137,12 +158,16 @@ function handleListItemClick(e) {
     if (!listItem.textContent) return;
 
     const id = listItem.textContent.split(".")[0];
+
+    LEFT_BUTTON_PRESS.play();
+
     fetchPokeData(id);
 }
 
 function handleButtonAClick()
 {
     LEFT_BUTTON_PRESS.play();
+
     mainScreen.classList.add('hide');
     secondaryScreen.classList.remove('hide');
 
@@ -186,6 +211,12 @@ function decrementPokeInputID()
     handlePokeIdInput();
 }
 
+function playPokeSound()
+{
+    POKEMON_CRY.play();
+    console.log(POKEMON_CRY);
+}
+
 
 // Event listeners
 previousButton.addEventListener("click", handlePreviousButtonClick);
@@ -203,6 +234,8 @@ dPadTop.addEventListener("click",incrementPokeInputID);
 dPadRight.addEventListener("click",incrementPokeInputID);
 dPadLeft.addEventListener("click",decrementPokeInputID);
 dPadBottom.addEventListener("click",decrementPokeInputID);
+
+playButton.addEventListener("click", playPokeSound);
 
 //init
 fetchPokeList("https://pokeapi.co/api/v2/pokemon?offset=0&limit=20");
