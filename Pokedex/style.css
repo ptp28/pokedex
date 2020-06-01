@@ -14,6 +14,8 @@
     display: flex;
     font-family: sans-serif;
     justify-content: center;
+    height: 100vh;
+    align-items: center;
   }
   
   .pokedex {
@@ -22,6 +24,7 @@
     height: 500px;
     margin: 50px;
     width: 800px;
+    position: relative;
   }
   
   .left-container,
@@ -487,3 +490,45 @@
   .fairy {
     background: #F9AEFF;
   }
+
+  /*new code for flip animation*/
+@media only screen and (max-width: 793px) {
+   body {
+    display: flex;
+    font-family: sans-serif;
+    justify-content: center;
+    height: 100vh;
+    align-items: flex-start;
+  }
+  .pokedex {
+    align-items: flex-start;
+    display: flex;
+    height: 500px;
+    margin: 50px;
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    margin-top: 0px;
+  }
+
+  .left-container {
+    background: #E71D23;
+    height: 100%;
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+   .right-container {
+    background: #E71D23;
+    height: 100%;
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
